@@ -1,32 +1,35 @@
 /**
- * Exercício 1 — Boas-vindas
- * useEffect · [] · 5 min
+ * Gabarito — Boas-vindas.
  *
- * Para rodar este arquivo, em exercicios/ativo.js:
- * export { default } from './06-useeffect-boas-vindas';
+ * Com [], o efeito roda uma vez, quando a tela monta.
+ * Clicar muda o estado e renderiza de novo, mas a lista vazia
+ * diz para não rodar outra vez. Por isso o alerta não volta.
  *
- * 1. Com useEffect e [], mostre um Alert "Bem-vindo"
- *    e um console.log('A tela abriu!').
- * 2. Crie um contador com um botão Clicar.
- * 3. Clique várias vezes: o alerta não volta. Por quê?
- * 4. Agora apague o [] e clique de novo. O que mudou?
- *    Volte o [] depois.
+ * Sem o [], o efeito roda depois de todo render. Cada clique
+ * mostra o alerta de novo. O arquivo final volta com [].
  *
- * Ao salvar o arquivo, o alerta aparece de novo.
- * É o Fast Refresh montando a tela outra vez.
+ * Ao salvar, o Fast Refresh monta a tela outra vez e o alerta
+ * aparece de novo. Isso é esperado.
+ *
+ * Para ver no Expo Go, em exercicios/ativo.js:
+ * export { default } from '../gabarito/06-useeffect-boas-vindas';
  */
 
-import { useEffect, useState } from 'react';
-import { Alert, Button, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { Alert, Button, Text, View } from "react-native";
 
 export default function App() {
-  // 1. os estados ficam aqui
+  const [cliques, setCliques] = useState(0);
+
+  useEffect(() => {
+    console.log("A tela abriu!");
+    Alert.alert("Bem-vindo");
+  }, []);
 
   return (
     <View style={{ flex: 1, padding: 24, paddingTop: 60, gap: 12 }}>
-      <Text>Exercício 1 — Boas-vindas</Text>
-      {/* 2. o que aparece na tela */}
-      {/* 3. os botões */}
+      <Text>Cliques: {cliques}</Text>
+      <Button title="Clicar" onPress={() => setCliques((atual) => atual + 1)} />
     </View>
   );
 }

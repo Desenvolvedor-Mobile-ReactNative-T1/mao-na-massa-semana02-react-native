@@ -16,17 +16,44 @@
  * "Time A vencendo" ou "Time B vencendo".
  */
 
-import { useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { useState } from "react";
+import { Button, Text, View } from "react-native";
 
 export default function App() {
   // 1. os estados ficam aqui
+  const [timeA, setTimeA] = useState(0);
+  const [timeB, setTimeB] = useState(0);
+
+  const handleScore = (bool) => {
+    if (bool) {
+      setTimeA((atual) => atual + 1);
+    } else {
+      setTimeB((atual) => atual + 1);
+    }
+  };
+
+  const clean = () => {
+    setTimeA(0);
+    setTimeB(0);
+  };
 
   return (
     <View style={{ flex: 1, padding: 24, paddingTop: 60, gap: 12 }}>
       <Text>Exercício 1 — Placar do jogo</Text>
-      {/* 2. o que aparece na tela */}
-      {/* 3. os botões */}
+      <Text style={{ fontSize: 24 }}>
+        Time A {timeA} x {timeB} Time B
+      </Text>
+      <Button title="Gol do Time A" onPress={() => handleScore(true)} />
+      <Button title="Gol do Time B" onPress={() => handleScore(false)} />
+      <Button title="Zerar Placar" color={"red"} onPress={clean} />
+
+      <Text>
+        {timeA === timeB
+          ? "Empate"
+          : timeA > timeB
+            ? "Time A Vencendo"
+            : "Time B Vencendo"}
+      </Text>
     </View>
   );
 }

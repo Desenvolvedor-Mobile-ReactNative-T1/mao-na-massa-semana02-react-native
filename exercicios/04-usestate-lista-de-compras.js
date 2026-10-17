@@ -1,32 +1,49 @@
 /**
- * Exercício 4 — Lista de compras
- * useState · array · 12 min
+ * Gabarito — Exercício 4, lista de compras.
+ * Inclui o desafio extra.
  *
- * Para rodar este arquivo, em exercicios/ativo.js:
- * export { default } from './04-usestate-lista-de-compras';
- *
- * 1. Crie dois estados: item (texto, '') e itens (lista, []).
- * 2. Um TextInput controlado com placeholder "Ex.: pão".
- * 3. Botão Adicionar: coloca { id: Date.now(), nome: item }
- *    na lista com spread e limpa o campo.
- * 4. Campo vazio? Mostre um Alert e não adicione (use trim()).
- * 5. Mostre "🛒 Lista de compras (N)" e cada item com .map() e key.
- * 6. Lista vazia? Mostre "Sua lista está vazia."
- *
- * Desafio extra: um botão Remover em cada item, com filter.
+ * Para ver no Expo Go, em exercicios/ativo.js:
+ * export { default } from '../gabarito/04-usestate-lista-de-compras';
  */
 
-import { useState } from 'react';
-import { Alert, Button, Text, TextInput, View } from 'react-native';
+import { useState } from "react";
+import { Alert, Button, Text, TextInput, View } from "react-native";
 
 export default function App() {
-  // 1. os estados ficam aqui
+  const [item, setItem] = useState("");
+  const [itens, setItens] = useState([]);
+
+  function adicionar() {
+    if (item.trim() === "") {
+      Alert.alert("Ops", "Digite um item antes de adicionar.");
+      return;
+    }
+
+    setItens([...itens, { id: Date.now(), nome: item.trim() }]);
+    setItem("");
+  }
+
+  function remover(id) {
+    setItens(itens.filter((atual) => atual.id !== id));
+  }
 
   return (
     <View style={{ flex: 1, padding: 24, paddingTop: 60, gap: 12 }}>
-      <Text>Exercício 4 — Lista de compras</Text>
-      {/* 2. o que aparece na tela */}
-      {/* 3. os botões */}
+      <Text>🛒 Lista de compras ({itens.length})</Text>
+      <TextInput
+        value={item}
+        onChangeText={setItem}
+        placeholder="Ex.: pão"
+        style={{ borderWidth: 1, padding: 12 }}
+      />
+      <Button title="Adicionar" onPress={adicionar} />
+      {itens.length === 0 && <Text>Sua lista está vazia.</Text>}
+      {itens.map((atual) => (
+        <View key={atual.id} style={{ gap: 4 }}>
+          <Text>• {atual.nome}</Text>
+          <Button title="Remover" onPress={() => remover(atual.id)} />
+        </View>
+      ))}
     </View>
   );
 }

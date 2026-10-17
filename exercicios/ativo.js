@@ -16,4 +16,4 @@
  *   ./06-useeffect-boas-vindas
  *   ./07-useeffect-meta-de-passos
  */
-export { default } from "./02-usestate-volume";
+export { default } from "./01-usestate-placar-do-jogo";

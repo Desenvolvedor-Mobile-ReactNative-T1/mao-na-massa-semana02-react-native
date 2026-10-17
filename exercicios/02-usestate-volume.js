@@ -15,17 +15,30 @@
  * Desafio extra: uma barrinha de volume: '█'.repeat(volume).
  */
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button, Text, View } from "react-native";
 
 export default function App() {
   // 1. os estados ficam aqui
+  const [volume, setVolume] = useState(5);
 
   return (
     <View style={{ flex: 1, padding: 24, paddingTop: 60, gap: 12 }}>
       <Text>Exercício 2 — Volume de 0 a 10</Text>
       {/* 2. o que aparece na tela */}
+      <Text>🔊 Volume: {volume}</Text>
       {/* 3. os botões */}
+      <Button
+        title="+"
+        onPress={() => setVolume((value) => (value < 10 ? value + 1 : value))}
+      />
+      <Button
+        title="-"
+        onPress={() => setVolume((value) => (value > 0 ? value - 1 : value))}
+      />
+      {volume === 0 && <Text>🔇 Mudo</Text>}
+      {volume === 10 && <Text>Volume Máximo</Text>}
+      <Text>{"█".repeat(volume)}</Text>
     </View>
   );
 }

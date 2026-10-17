@@ -1,33 +1,41 @@
 /**
- * Exercício 2 — Meta de passos
- * useEffect · [estado] · 7 min
+ * Gabarito — Meta de passos.
  *
- * Para rodar este arquivo, em exercicios/ativo.js:
- * export { default } from './07-useeffect-meta-de-passos';
+ * O efeito observa só passos. +1 copo muda agua e o console
+ * fica quieto. +1 passo muda passos e o console fala.
+ * Ao abrir, o efeito também roda uma vez, com passos em 0.
  *
- * 1. Crie dois estados: passos e agua, com um botão +1 para cada.
- * 2. Crie um efeito com [passos] que faz
- *    console.log('passos mudou para', passos).
- * 3. Dentro do efeito: quando passos chegar a 5,
- *    mostre um Alert "Meta! 🎉".
- * 4. Toque em +1 copo: o console fica quieto?
- *    Toque em +1 passo: o console fala?
+ * Desafio extra, sem deixar ligado neste arquivo:
+ *   [agua]          o console passa a reagir só aos copos
+ *   [passos, agua]  o console reage aos dois
  *
- * Desafio extra: troque para [agua] e veja o que muda.
- * Depois, coloque os dois: [passos, agua].
+ * Para ver no Expo Go, em exercicios/ativo.js:
+ * export { default } from '../gabarito/07-useeffect-meta-de-passos';
  */
 
-import { useEffect, useState } from 'react';
-import { Alert, Button, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { Alert, Button, Text, View } from "react-native";
 
 export default function App() {
-  // 1. os estados ficam aqui
+  const [passos, setPassos] = useState(0);
+  const [agua, setAgua] = useState(0);
+
+  useEffect(() => {
+    console.log("passos mudou para", passos);
+    if (passos === 5) {
+      Alert.alert("Meta! 🎉");
+    }
+  }, [passos]);
 
   return (
     <View style={{ flex: 1, padding: 24, paddingTop: 60, gap: 12 }}>
-      <Text>Exercício 2 — Meta de passos</Text>
-      {/* 2. o que aparece na tela */}
-      {/* 3. os botões */}
+      <Text>👟 {passos} passos</Text>
+      <Button
+        title="+1 passo"
+        onPress={() => setPassos((atual) => atual + 1)}
+      />
+      <Text>💧 {agua} copos</Text>
+      <Button title="+1 copo" onPress={() => setAgua((atual) => atual + 1)} />
     </View>
   );
 }
